@@ -9,7 +9,7 @@ Swin Transformer是由微软亚洲研究院在今年公布的一篇利用transfo
 ![st](../../../images/computer_vision/classification/st_swandvit.jpg)
 整体概括：
 
-下图为Swin Transformer的网络结构，输入的图像先经过一层卷积进行patch映射，将图像先分割成4 × 4的小块，图片是224×224输入，那么就是56个patch块，如果是384×384的尺寸，则是96个patch块。这里以224 × 224的输入为例，输入图像经过这一步操作，每个patch的特征维度为4x4x3=48的特征图。因此，输入的图像变成了H/4×W/4×48的特征图。然后，特征图开始输入到stage1，stage1中linear embedding将path特征维度变成C，因此变成了H/4×W/4×C。然后送入Swin Transformer Block，在进入stage2前，接下来先通过Patch Merging操作，Patch Merging和CNN中stride=2的1×1卷积十分相似，Patch Merging在每个Stage开始前做降采样，用于缩小分辨率，调整通道数，当H/4×W/4×C的特征图输送到Patch Merging，将输入按照2x2的相邻patches合并，这样子patch块的数量就变成了H/8 x W/8，特征维度就变成了4C，之后经过一个MLP，将特征维度降为2C。因此变为H/8×W/8×2C。接下来的stage就是重复上面的过程。
+下图为Swin Transformer的网络结构，输入的图像先经过一层卷积进行patch映射，将图像先分割成4 × 4的小块，图片是224×224输入，那么就是56个patch块，如果是384×384的尺寸，则是96个patch块。这里以224 × 224的输入为例，输入图像经过这一步操作，每个patch的特征维度为4x4x3=48的特征图。因此，输入的图像变成了H/4×W/4×48的特征图。然后，特征图开始输入到stage1，stage1中linear embedding将patch特征维度变成C，因此变成了H/4×W/4×C。然后送入Swin Transformer Block，在进入stage2前，接下来先通过Patch Merging操作，Patch Merging和CNN中stride=2的1×1卷积十分相似，Patch Merging在每个Stage开始前做降采样，用于缩小分辨率，调整通道数，当H/4×W/4×C的特征图输送到Patch Merging，将输入按照2x2的相邻patches合并，这样子patch块的数量就变成了H/8 x W/8，特征维度就变成了4C，之后经过一个MLP，将特征维度降为2C。因此变为H/8×W/8×2C。接下来的stage就是重复上面的过程。
 
 ![st](../../../images/computer_vision/classification/st_net.jpg)
 每步细说：
